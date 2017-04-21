@@ -1,0 +1,21 @@
+﻿<form action="/Home/Index" method="post">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Add Journal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" name="JournalName" id="txtJournalName" placeholder="Journal name here"><br>
+                    @if (TempData["notice"] != null)
+                    {
+                        <p style="color: red">@TempData["notice"]</p>
+                    }
+                </td>
+                <td><input type="submit" id="btnAddJournal" value="Add Journal" /></td>
+            </tr>
+        </tbody>
+    </table>
+</form>

@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MedicalJournalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PublishCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Publish">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="JournalId" Type="int" Nullable="false" />
+          <Property Name="PublishDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subscriber">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubscriberJournal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubscriberId" Type="int" Nullable="false" />
+          <Property Name="JournalId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Publish_Journal">
+          <End Role="Journal" Type="Self.Journal" Multiplicity="1" />
+          <End Role="Publish" Type="Self.Publish" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Publish">
+              <PropertyRef Name="JournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriberJournal_Journal">
+          <End Role="Journal" Type="Self.Journal" Multiplicity="1" />
+          <End Role="SubscriberJournal" Type="Self.SubscriberJournal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriberJournal">
+              <PropertyRef Name="JournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriberJournal_Subscriber">
+          <End Role="Subscriber" Type="Self.Subscriber" Multiplicity="1" />
+          <End Role="SubscriberJournal" Type="Self.SubscriberJournal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscriber">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriberJournal">
+              <PropertyRef Name="SubscriberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MedicalJournalModelStoreContainer">
+          <EntitySet Name="Journal" EntityType="Self.Journal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Publish" EntityType="Self.Publish" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subscriber" EntityType="Self.Subscriber" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriberJournal" EntityType="Self.SubscriberJournal" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Publish_Journal" Association="Self.FK_Publish_Journal">
+            <End Role="Journal" EntitySet="Journal" />
+            <End Role="Publish" EntitySet="Publish" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriberJournal_Journal" Association="Self.FK_SubscriberJournal_Journal">
+            <End Role="Journal" EntitySet="Journal" />
+            <End Role="SubscriberJournal" EntitySet="SubscriberJournal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriberJournal_Subscriber" Association="Self.FK_SubscriberJournal_Subscriber">
+            <End Role="Subscriber" EntitySet="Subscriber" />
+            <End Role="SubscriberJournal" EntitySet="SubscriberJournal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MedicalJournalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MedicalJournalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Journals" EntityType="MedicalJournalModel.Journal" />
+          <EntitySet Name="Publishes" EntityType="MedicalJournalModel.Publish" />
+          <EntitySet Name="Subscribers" EntityType="MedicalJournalModel.Subscriber" />
+          <EntitySet Name="SubscriberJournals" EntityType="MedicalJournalModel.SubscriberJournal" />
+          <AssociationSet Name="FK_Publish_Journal" Association="MedicalJournalModel.FK_Publish_Journal">
+            <End Role="Journal" EntitySet="Journals" />
+            <End Role="Publish" EntitySet="Publishes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriberJournal_Journal" Association="MedicalJournalModel.FK_SubscriberJournal_Journal">
+            <End Role="Journal" EntitySet="Journals" />
+            <End Role="SubscriberJournal" EntitySet="SubscriberJournals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriberJournal_Subscriber" Association="MedicalJournalModel.FK_SubscriberJournal_Subscriber">
+            <End Role="Subscriber" EntitySet="Subscribers" />
+            <End Role="SubscriberJournal" EntitySet="SubscriberJournals" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PublishCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Publishes" Relationship="MedicalJournalModel.FK_Publish_Journal" FromRole="Journal" ToRole="Publish" />
+          <NavigationProperty Name="SubscriberJournals" Relationship="MedicalJournalModel.FK_SubscriberJournal_Journal" FromRole="Journal" ToRole="SubscriberJournal" />
+        </EntityType>
+        <EntityType Name="Publish">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="JournalId" Type="Int32" Nullable="false" />
+          <Property Name="PublishDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Journal" Relationship="MedicalJournalModel.FK_Publish_Journal" FromRole="Publish" ToRole="Journal" />
+        </EntityType>
+        <EntityType Name="Subscriber">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SubscriberJournals" Relationship="MedicalJournalModel.FK_SubscriberJournal_Subscriber" FromRole="Subscriber" ToRole="SubscriberJournal" />
+        </EntityType>
+        <EntityType Name="SubscriberJournal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubscriberId" Type="Int32" Nullable="false" />
+          <Property Name="JournalId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Journal" Relationship="MedicalJournalModel.FK_SubscriberJournal_Journal" FromRole="SubscriberJournal" ToRole="Journal" />
+          <NavigationProperty Name="Subscriber" Relationship="MedicalJournalModel.FK_SubscriberJournal_Subscriber" FromRole="SubscriberJournal" ToRole="Subscriber" />
+        </EntityType>
+        <Association Name="FK_Publish_Journal">
+          <End Type="MedicalJournalModel.Journal" Role="Journal" Multiplicity="1" />
+          <End Type="MedicalJournalModel.Publish" Role="Publish" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Publish">
+              <PropertyRef Name="JournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriberJournal_Journal">
+          <End Type="MedicalJournalModel.Journal" Role="Journal" Multiplicity="1" />
+          <End Type="MedicalJournalModel.SubscriberJournal" Role="SubscriberJournal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriberJournal">
+              <PropertyRef Name="JournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriberJournal_Subscriber">
+          <End Type="MedicalJournalModel.Subscriber" Role="Subscriber" Multiplicity="1" />
+          <End Type="MedicalJournalModel.SubscriberJournal" Role="SubscriberJournal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscriber">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriberJournal">
+              <PropertyRef Name="SubscriberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MedicalJournalModelStoreContainer" CdmEntityContainer="MedicalJournalEntities">
+          <EntitySetMapping Name="Journals">
+            <EntityTypeMapping TypeName="MedicalJournalModel.Journal">
+              <MappingFragment StoreEntitySet="Journal">
+                <ScalarProperty Name="PublishCount" ColumnName="PublishCount" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Publishes">
+            <EntityTypeMapping TypeName="MedicalJournalModel.Publish">
+              <MappingFragment StoreEntitySet="Publish">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+                <ScalarProperty Name="JournalId" ColumnName="JournalId" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subscribers">
+            <EntityTypeMapping TypeName="MedicalJournalModel.Subscriber">
+              <MappingFragment StoreEntitySet="Subscriber">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriberJournals">
+            <EntityTypeMapping TypeName="MedicalJournalModel.SubscriberJournal">
+              <MappingFragment StoreEntitySet="SubscriberJournal">
+                <ScalarProperty Name="JournalId" ColumnName="JournalId" />
+                <ScalarProperty Name="SubscriberId" ColumnName="SubscriberId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

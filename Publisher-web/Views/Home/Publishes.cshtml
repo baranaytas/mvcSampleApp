@@ -1,0 +1,67 @@
+﻿@using Entity
+
+@{
+    Layout = null;
+    ViewBag.Title = "Publishes";
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Publishes of @ViewBag.Journal</h2>
+
+        <form action="/Home/Publishes" method="post" enctype="multipart/form-data">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>New Publication</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="file" name="file" placeholder="Choose a pdf file"><br>
+                            @if (TempData["notice"] != null)
+                            {
+                                <p style="color: red">@TempData["notice"]</p>
+                            }
+                        </td>
+                        <td><input type="submit"  value="Publish" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Url</th>
+                    <th>Publish Date</th>
+                    <th>Delete Publish</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (PublishModel publish in ViewBag.Publishes)
+                {
+                    <tr>
+                        <td>@publish.Name</td>
+                        <td>@publish.Url</td>
+                        <td>@publish.PublishDate.ToString()</td>
+                        <td><input type="submit" formaction="/Home/Delete/@publish.Id" id="@publish.Id" value="delete" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

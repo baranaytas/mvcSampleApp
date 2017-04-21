@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MedicalJournalModelStoreContainer" CdmEntityContainer="MedicalJournalEntities">
+    <EntitySetMapping Name="Journals">
+      <EntityTypeMapping TypeName="MedicalJournalModel.Journal">
+        <MappingFragment StoreEntitySet="Journal">
+          <ScalarProperty Name="PublishCount" ColumnName="PublishCount" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Publishes">
+      <EntityTypeMapping TypeName="MedicalJournalModel.Publish">
+        <MappingFragment StoreEntitySet="Publish">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+          <ScalarProperty Name="JournalId" ColumnName="JournalId" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Subscribers">
+      <EntityTypeMapping TypeName="MedicalJournalModel.Subscriber">
+        <MappingFragment StoreEntitySet="Subscriber">
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubscriberJournals">
+      <EntityTypeMapping TypeName="MedicalJournalModel.SubscriberJournal">
+        <MappingFragment StoreEntitySet="SubscriberJournal">
+          <ScalarProperty Name="JournalId" ColumnName="JournalId" />
+          <ScalarProperty Name="SubscriberId" ColumnName="SubscriberId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

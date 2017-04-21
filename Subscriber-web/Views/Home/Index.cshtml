@@ -1,0 +1,76 @@
+﻿
+@using Entity
+@{
+    Layout = null;
+}
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Journals</h2>
+        @if (Session["LogedUsername"] == null)
+        {
+            <p>Please <a href="@Url.Action( "Login", "Home")"><span>Login</span></a> to subscribe journals</p>
+        }
+        else
+        {
+            <p>Hello, @Session["LogedUsername"].ToString()</p>
+            <p>You can subscribe journals here</p>
+        }
+
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    @*<th>Id</th>*@
+                    <th>Journal</th>
+                    <th>PublishCount</th>
+                    <th>Subscribe Journal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (JournalModel journal in ViewBag.Journals)
+            {
+                    <tr>
+                        @*<td>@journal.Id</td>*@
+                        <td>@journal.Name</td>
+                        <td>@journal.PublishCount</td>
+                        @if (Session["LogedUsername"] == null)
+                        {
+                            <td>Please <a href="@Url.Action( "Login", "Home")"><span>Login</span></a> to subscribe journals</td>
+                        }
+                        else
+                        {
+                            if ((ViewBag.UserSubscriptionList as List<SubscriberJournalModel>).Any(x => x.JournalId==journal.Id))
+                            {
+                                <td><a href="@Url.Action( "UnSubscribe", "Home", new{ id= (ViewBag.UserSubscriptionList as List<SubscriberJournalModel>).FirstOrDefault(x => x.JournalId == journal.Id).Id } )"><span>UnSubscribe</span></a></td>
+                            }
+                            else
+                            {
+                                <td><a href="@Url.Action( "Subscribe", "Home", new{ id= @journal.Id } )"><span>Subscribe</span></a></td>
+                            }
+                        }
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+

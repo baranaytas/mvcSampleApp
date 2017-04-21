@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MedicalJournalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Journal">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PublishCount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Publish">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Url" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="JournalId" Type="int" Nullable="false" />
+    <Property Name="PublishDate" Type="datetime" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Subscriber">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubscriberJournal">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubscriberId" Type="int" Nullable="false" />
+    <Property Name="JournalId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Publish_Journal">
+    <End Role="Journal" Type="Self.Journal" Multiplicity="1" />
+    <End Role="Publish" Type="Self.Publish" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Journal">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Publish">
+        <PropertyRef Name="JournalId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubscriberJournal_Journal">
+    <End Role="Journal" Type="Self.Journal" Multiplicity="1" />
+    <End Role="SubscriberJournal" Type="Self.SubscriberJournal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Journal">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SubscriberJournal">
+        <PropertyRef Name="JournalId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubscriberJournal_Subscriber">
+    <End Role="Subscriber" Type="Self.Subscriber" Multiplicity="1" />
+    <End Role="SubscriberJournal" Type="Self.SubscriberJournal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subscriber">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SubscriberJournal">
+        <PropertyRef Name="SubscriberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MedicalJournalModelStoreContainer">
+    <EntitySet Name="Journal" EntityType="Self.Journal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Publish" EntityType="Self.Publish" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subscriber" EntityType="Self.Subscriber" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubscriberJournal" EntityType="Self.SubscriberJournal" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Publish_Journal" Association="Self.FK_Publish_Journal">
+      <End Role="Journal" EntitySet="Journal" />
+      <End Role="Publish" EntitySet="Publish" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubscriberJournal_Journal" Association="Self.FK_SubscriberJournal_Journal">
+      <End Role="Journal" EntitySet="Journal" />
+      <End Role="SubscriberJournal" EntitySet="SubscriberJournal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubscriberJournal_Subscriber" Association="Self.FK_SubscriberJournal_Subscriber">
+      <End Role="Subscriber" EntitySet="Subscriber" />
+      <End Role="SubscriberJournal" EntitySet="SubscriberJournal" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,16 @@
+C:\Users\Vural\Desktop\MedicalJournal\Entity\bin\Debug\Entity.dll
+C:\Users\Vural\Desktop\MedicalJournal\Entity\bin\Debug\Entity.pdb
+C:\Users\Vural\Desktop\MedicalJournal\Entity\obj\Debug\Entity.dll
+C:\Users\Vural\Desktop\MedicalJournal\Entity\obj\Debug\Entity.pdb
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\bin\Debug\Entity.dll
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\bin\Debug\Entity.pdb
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\bin\Debug\mscorlib.dll
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\bin\Debug\tr\mscorlib.resources.dll
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\bin\Debug\normidna.nlp
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\bin\Debug\normnfc.nlp
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\bin\Debug\normnfd.nlp
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\bin\Debug\normnfkc.nlp
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\bin\Debug\normnfkd.nlp
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.cache
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\obj\Debug\Entity.dll
+C:\Users\baran\Desktop\medical\MedicalJournal\Entity\obj\Debug\Entity.pdb

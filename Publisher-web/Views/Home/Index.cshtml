@@ -1,0 +1,56 @@
+﻿@using Entity
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Journals</h2>
+        <p>You can add and publish journals</p>
+
+        @Html.Partial("AddJournal")
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Journal</th>
+                    <th>PublishCount</th>
+                    <th>Delete Journal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (JournalModel journal in ViewBag.Journals)
+            {
+                    <tr>
+                        <td>@journal.Id</td>
+                        <td><a href="@Url.Action( "Publishes", "Home", new{ id= @journal.Id } )"><span>@journal.Name</span></a></td>
+                        <td>@journal.PublishCount</td>
+
+                        <td><a href="@Url.Action( "Delete", "Home", new{ id= @journal.Id } )"><span>Delete</span></a></td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+
+    </div>
+</body>
+</html>
